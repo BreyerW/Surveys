@@ -1,0 +1,74 @@
+﻿@model Surveys.Model.Survey
+
+@{
+    ViewData["Title"] = "Complete";
+    var contents = ViewData["contents"] as List<Surveys.Model.SurveysContent>;
+}
+<h4>@Model.Topic</h4>
+<hr />
+
+<form asp-action="Complete" method="post" class="row g-3">
+
+    <div class="form-group col-12">
+        <br />
+        <h4>Pytania i odpowiedzi</h4>
+        <hr />
+    </div>
+
+    @for (var i = 0; i < contents.Count; i++)
+    {
+        <div class="col-12">
+            @Html.Label(@contents[i].IdQuestionNavigation.Question1, @contents[i].IdQuestionNavigation.Question1 + "?", new { @class = "form-label" })
+            @if (ViewData.ModelState[$"answer[{i}]"] is not null && ViewData.ModelState[$"answer[{i}]"].Errors.Any())
+            {
+                <span class=" text-danger">
+                    @ViewData.ModelState[$"answer[{i}]"].Errors[0].ErrorMessage
+                </span>
+            }
+            <br />
+            @{
+                var j = 0;
+                if (contents[i].IdQuestionNavigation.PredefinedAnswers.Count > 1)
+                {
+                    if (contents[i].AllowMultipleAnswers)
+                    {
+                        foreach (var answer in contents[i].IdQuestionNavigation.PredefinedAnswers)
+                        {
+                            @Html.CheckBox($"answer[{i}][{j}]", false, new { @id = $"{contents[i].IdQuestion}_{j}", @class = "form-checkbox", @style = "margin-left:10%" });
+                            @Html.Label(@answer.Answer, @answer.Answer, new { @for = $"{contents[i].IdQuestion}_{j}", @class = "form-label", @style = "padding-left:10px" })
+                            j++;
+                            <br />
+                        }
+                    }
+                    else
+                    {
+                        foreach (var answer in contents[i].IdQuestionNavigation.PredefinedAnswers)
+                        {
+                            @Html.RadioButton($"answer[{i}]", @answer.Answer, false, new { @id = $"{contents[i].IdQuestion}_{j}", @class = "form-radiobutton", @style = "margin-left:10%" });
+                            @Html.Label(@answer.Answer, @answer.Answer, new { @for = $"{contents[i].IdQuestion}_{j}", @class = "form-label", @style = "padding-left:10px" })
+                            j++;
+                            <br />
+                        }
+                        <input type="radio" hidden name="answer[@i]" value="notSelected" checked />
+                    }
+                }
+                else
+                {
+                    @Html.TextArea($"answer[{i}][0]", contents[i].IdQuestionNavigation.PredefinedAnswers.First().Answer, 5, 30, new { @id = $"{contents[i].IdQuestion}_{j}", @class = "form-radiobutton", @style = "resize: none; margin-left:10%" });
+                }
+                <br />
+
+            }
+
+        </div>
+    }
+
+    <div class="form-group col-12">
+        <br />
+        <input type="submit" name="complete" value="Wyślij ankietę" class="btn btn-primary" />
+    </div>
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

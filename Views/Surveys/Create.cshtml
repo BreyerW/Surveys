@@ -1,0 +1,129 @@
+﻿@model Surveys.Model.Survey
+
+@{
+    ViewData["Title"] = "Create";
+    var contents = ViewData["contents"] as List<Surveys.Model.SurveysContent>;
+    var existingContents = ViewData["existingContents"] as IQueryable<Surveys.Model.SurveysContent>;
+}
+<h4>Nowa ankieta</h4>
+<hr />
+
+<form asp-action="Create" method="post" class="row g-3">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="col-12">
+        <div class="form-group">
+            <label asp-for="Topic" class="control-label"></label>
+            <input asp-for="Topic" class="form-control" />
+            <span asp-validation-for="Topic" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group col-12">
+        <br />
+        <h4>Reguły</h4>
+        <hr />
+    </div>
+    <div class="col-md-4">
+        <label asp-for="MinBirthYear" class="form-label"></label>
+        <select asp-for="MinBirthYear" class="form-control">
+            @for (var i = 1900; i < DateTime.Now.Year + 1; i++)
+            {
+                <option value="@i">@i</option>
+            }
+        </select>
+        <span asp-validation-for="MinBirthYear" class="text-danger"></span>
+    </div>
+    <div class="col-md-4">
+
+        <label asp-for="MaxBirthYear" class="form-label"></label>
+        <select asp-for="MaxBirthYear" class="form-control">
+            @for (var i = 1900; i < DateTime.Now.Year; i++)
+            {
+                string selected = Model is not null && Model.MaxBirthYear is not null && Model.MaxBirthYear == i ? "selected" : null;
+                <option value="@i" selected="@selected"> @i</option>
+            }
+            @{ string s = (Model is null || Model.MaxBirthYear is null || Model.MaxBirthYear == DateTime.Now.Year) ? "selected" : null; }
+            <option value="@DateTime.Now.Year" selected="@s">@DateTime.Now.Year</option>
+        </select>
+        <span asp-validation-for="MaxBirthYear" class="text-danger"></span>
+    </div>
+    <div class="col-md-4">
+        <label asp-for="Sex" class="form-label"></label>
+        <select asp-for="Sex" class="form-control">
+            <option value="All" selected>Wszystkie</option>
+            <option value="Male">Mężczyzna</option>
+            <option value="Female">Kobieta</option>
+        </select>
+        <span asp-validation-for="Sex" class="text-danger"></span>
+    </div>
+    <div class="form-group col-12">
+        <br />
+        <h4>Pytania z istniejących szablonów:</h4>
+        <hr />
+    </div>
+    <div class="col-md-10">
+        <select name="existingQ" class="form-control">
+            <option value="" selected>Wybierz z istniejących pytań</option>
+            @foreach (var e in existingContents)
+            {
+                <option value="@e.IdQuestion">@e.IdQuestionNavigation.Question1</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-2">
+        <input type="submit" name="add_existing" value="Dodaj" class="btn btn-primary" />
+    </div>
+    <div class="form-group col-12">
+        <br />
+        <h4>Pytania i odpowiedzi</h4>
+        <hr />
+    </div>
+    <div class="col-12">
+        @for (var i = 0; i < contents.Count; i++)
+        {
+            <button type="submit" name="delete_question" value="@i" class="btn btn-primary" style="margin-right:11px">-</button><label class="form-label">@i. Pytanie: </label>
+            @if (ViewData.ModelState[$"q[{i}]"] is not null && ViewData.ModelState[$"q[{i}]"].Errors.Any())
+            {
+                <span class="text-danger">
+                    @ViewData.ModelState[$"q[{i}]"].Errors[0].ErrorMessage
+                </span>
+            }
+
+            <input type="text" name="q[@i]" class="form-control" value=@contents[i].IdQuestionNavigation.Question1 />
+            <label class="form-label">Odpowiedź wymagana?&nbsp;</label>@Html.CheckBox($"config[{i}][0]", @contents[i].Required, new { @class = "form-checkbox" })
+            <label class="form-label">&nbsp;|&nbsp; Zezwolić na wiele odpowiedzi?&nbsp;</label>
+            @Html.CheckBox($"config[{i}][1]", @contents[i].AllowMultipleAnswers, new { @class = "form-checkbox" })
+
+            <br /><p style="padding-left: 5%">Odpowiedzi: <input type="submit" name="create_answer" value="Nowa odpowiedź dla pyt. nr.: @i" class="btn btn-primary" /></p>
+
+            {
+                var j = 0;
+                foreach (var answer in contents[i].IdQuestionNavigation.PredefinedAnswers)
+                {
+                    <div class="input-group mb-3" style="margin-left:10%">
+                        <button type="submit" name="delete_answer" value="@i,@j" class="btn btn-primary" style="margin-right:11px;">-</button>
+                        <input type="text" name="a[@i][@j]" class="form-control" value=@answer.Answer />
+                    </div>
+                    j++;
+
+                }
+            }
+        }
+    </div>
+    <div class="form-group col-12">
+        <br />
+        <input type="submit" name="new" value="Nowe pytanie" class="btn btn-primary" />
+    </div>
+    <div class="form-group col-12">
+        <br />
+        <input type="submit" name="create" value="Utwórz ankietę" class="btn btn-primary" />
+    </div>
+</form>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
