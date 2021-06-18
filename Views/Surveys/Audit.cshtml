@@ -1,0 +1,46 @@
+﻿
+@{
+    ViewData["Title"] = "Audit";
+    var changesDetected = ViewData["changesDetected"] as bool?;
+}
+
+<h4>Sprawdzanie stanu wypełnionych ankiet</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Audit" method="post" class="row g-3">
+            <div class="form-group">
+                <label for="hash" class="control-label">Podaj hash dla ankiety którą chcesz sprawdzić:</label>
+                <input type="text" id="hash" name="hash" class="form-control" />
+            </div>
+            <div class="form-group">
+                @if (ViewData.ModelState["hash"] is not null && ViewData.ModelState["hash"].Errors.Any())
+                {
+                    <span class="text-danger">
+                        @ViewData.ModelState["hash"].Errors[0].ErrorMessage
+                    </span>
+                }
+                @if (changesDetected.GetValueOrDefault())
+                {
+                    <span class="text-danger">
+                        Twoja ankieta została zmieniona!
+                    </span>
+                }
+                else if (changesDetected.HasValue)
+                {
+                    <span>
+                        Twoja ankieta jest bez zmian
+                    </span>
+                }
+
+                <br />
+                <br />
+                <input type="submit" name="audit" value="Sprawdź ankietę" class="btn btn-primary" />
+            </div>
+        </form>
+        </div>
+    </div>
+
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }

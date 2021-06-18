@@ -56,6 +56,7 @@
                                 <a class="dropdown-item" asp-area="" asp-controller="Users" asp-action="Details" asp-route-id="@User.FindFirstValue(ClaimTypes.NameIdentifier)">Moje konto</a>
                                 <a id="createSurveyButton" class="dropdown-item" asp-area="" asp-controller="Surveys" asp-action="Create" asp-route-id="@User.FindFirstValue(ClaimTypes.NameIdentifier)">Kreator ankiet</a>
                                 <a class="dropdown-item" asp-area="" asp-controller="Surveys" asp-action="IndexUncompletedSurveys">Ankiety do wypełnienia</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="Surveys" asp-action="Audit">Sprawdź stan wypełnionych ankiet</a>
                                 @if (User.IsInRole("Owner"))
                                 {
                                     <a class="dropdown-item" asp-area="" asp-controller="Users" asp-action="Index">Użytkownicy</a>

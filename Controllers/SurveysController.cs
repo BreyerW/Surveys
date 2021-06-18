@@ -40,7 +40,7 @@ namespace Surveys.Controllers
             ViewData["computedHash"] = hash;
             return View();
         }
-        // GET: Surveys/Edit/5
+        // GET: Surveys/Complete/5
         public async Task<IActionResult> Complete(int? id)
         {
             if (id == null)
@@ -61,7 +61,7 @@ namespace Surveys.Controllers
             return View(survey);
         }
 
-        // POST: Surveys/Edit/5
+        // POST: Surveys/Complete/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -107,13 +107,18 @@ namespace Surveys.Controllers
                     List<SubmittedSurveyAnswer> answers = new();
                     var j = 0;
                     using var hasher = Hasher.New();
-                    var result = BitConverter.GetBytes(DateTime.UtcNow.Millisecond);
-                    if (BitConverter.IsLittleEndian)
-                        result.Reverse();
                     var id_user = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
                     var user = _context.Users.Find(id_user);
-                    hasher.Update(Encoding.UTF8.GetBytes(user.Password));
-                    hasher.Update(result);
+                    byte[] idBytes = BitConverter.GetBytes(user.Id);
+                    byte[] bytes = BitConverter.GetBytes(submittedSurvey.IdSurvey);
+                    if (BitConverter.IsLittleEndian)
+                    {
+                        Array.Reverse(idBytes);
+                        Array.Reverse(bytes);
+                    }
+                    hasher.Update(idBytes);
+                    hasher.Update(bytes);
+
                     foreach (var content in contents)
                     {
                         var a = new SubmittedSurveyAnswer();
@@ -121,14 +126,15 @@ namespace Surveys.Controllers
                         a.IdQuestionNavigation = content.IdQuestionNavigation;
                         a.Answers = string.Join(',', answer[j]);
                         answers.Add(a);
+                        hasher.Update(Encoding.UTF8.GetBytes(a.IdQuestionNavigation.Question1));
                         hasher.Update(Encoding.UTF8.GetBytes(a.Answers));
                         j++;
                     }
                     var hash = hasher.Finalize();
                     stringHash = hash.ToString();
-                    foreach (var lackHash in answers)
+                    foreach (var addHash in answers)
                     {
-                        lackHash.Hash = stringHash;
+                        addHash.Hash = stringHash;
                     }
                     _context.SubmittedSurveys.Add(submittedSurvey);
                     _context.SubmittedSurveyAnswers.AddRange(answers);
@@ -282,87 +288,57 @@ namespace Surveys.Controllers
             contents.Add(new SurveysContent() { IdQuestionNavigation = question });
 
         }
-        // GET: Surveys/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        // GET: Surveys/Audit
+        public IActionResult Audit()
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var survey = await _context.Surveys.FindAsync(id);
-            if (survey == null)
-            {
-                return NotFound();
-            }
-            ViewData["IdUser"] = new SelectList(_context.Users, "Id", "BirthYear", survey.IdUser);
-            return View(survey);
+            return View();
         }
 
-        // POST: Surveys/Edit/5
+        // POST: Surveys/Audit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Topic,IdUser,MinBirthYear,MaxBirthYear,Sex")] Survey survey)
+        public IActionResult Audit(string audit, string hash)
         {
-            if (id != survey.Id)
-            {
-                return NotFound();
-            }
 
-            if (ModelState.IsValid)
+            if (string.IsNullOrEmpty(audit) is false && string.IsNullOrEmpty(hash) is false)
             {
-                try
+                var qAndAs = _context.SubmittedSurveyAnswers.Where(i => i.Hash == hash).Include(i => i.IdQuestionNavigation).Include(i => i.IdSubmittedSurveyNavigation);
+                if (qAndAs is null || qAndAs.Any() is false)
                 {
-                    _context.Update(survey);
-                    await _context.SaveChangesAsync();
+                    ModelState.AddModelError(nameof(hash), "Hash nie zwrócił żadnej ankiety");
+                    return View();
                 }
-                catch (DbUpdateConcurrencyException)
+                var submittedSurvey = qAndAs.First().IdSubmittedSurveyNavigation;
+                using var hasher = Hasher.New();
+                var id_user = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+                var user = _context.Users.Find(id_user);
+                byte[] idBytes = BitConverter.GetBytes(user.Id);
+                byte[] bytes = BitConverter.GetBytes(submittedSurvey.IdSurvey);
+                if (BitConverter.IsLittleEndian)
                 {
-                    if (!SurveyExists(survey.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    Array.Reverse(idBytes);
+                    Array.Reverse(bytes);
                 }
-                return RedirectToAction(nameof(Index));
+                hasher.Update(idBytes);
+                hasher.Update(bytes);
+                foreach (var content in qAndAs)
+                {
+                    hasher.Update(Encoding.UTF8.GetBytes(content.IdQuestionNavigation.Question1));
+                    hasher.Update(Encoding.UTF8.GetBytes(content.Answers));
+                }
+                var finalHash = hasher.Finalize();
+                var stringHash = finalHash.ToString();
+
+                if (stringHash != hash)
+                    ViewData["changesDetected"] = true;
+                else
+                    ViewData["changesDetected"] = false;
             }
-            ViewData["IdUser"] = new SelectList(_context.Users, "Id", "BirthYear", survey.IdUser);
-            return View(survey);
-        }
-
-        // GET: Surveys/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var survey = await _context.Surveys
-                .Include(s => s.IdUserNavigation)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (survey == null)
-            {
-                return NotFound();
-            }
-
-            return View(survey);
-        }
-
-        // POST: Surveys/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var survey = await _context.Surveys.FindAsync(id);
-            _context.Surveys.Remove(survey);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            else
+                ModelState.AddModelError(nameof(hash), "Hash nie może być pusty");
+            return View();
         }
 
         private bool SurveyExists(int id)
