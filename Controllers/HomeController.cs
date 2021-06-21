@@ -17,17 +17,26 @@ namespace Surveys.Controllers
         {
             _logger = logger;
         }
-
+        /// <summary>
+        /// Strona startowa
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Index()
         {
             return View();
         }
-
+        /// <summary>
+        /// Strona z polityką prywatności
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Privacy()
         {
             return View();
         }
-
+        /// <summary>
+        /// Generyczna strona błędu
+        /// </summary>
+        /// <returns></returns>
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

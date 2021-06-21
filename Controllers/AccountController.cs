@@ -24,17 +24,20 @@ namespace Surveys.Controllers
             _authService = authService;
             _context = context;
         }
-        // GET: AccountController
-        public ActionResult Index()
-        {
-            return View();
-        }
-
+        
+        /// <summary>
+        /// Strona logowania
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Login()
         {
             return View();
         }
-
+        /// <summary>
+        /// Akcja logowania
+        /// </summary>
+        /// <param name="login">Struktura zawierająca dane logowania</param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login([Bind("Username,Password")] LoginData login)
@@ -69,7 +72,10 @@ namespace Surveys.Controllers
             }
             return View(login);
         }
-
+        /// <summary>
+        /// Akcja wylogowania
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
@@ -77,16 +83,24 @@ namespace Surveys.Controllers
             return RedirectToAction(nameof(Index), "Home");
         }
         // GET: Account/Create
+        /// <summary>
+        /// Strona rejestracji
+        /// </summary>
+        /// <returns></returns>
         [AllowAnonymous]
         public IActionResult Create()
         {
-            //ViewData["IdRole"] = new SelectList(_context.Roles, "Id", "Id");
             return View();
         }
 
         // POST: Account/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// Akcja rejestracji
+        /// </summary>
+        /// <param name="user">Struktura zawierająca dane potrzebne do rejestracji</param>
+        /// <returns></returns>
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -155,10 +169,13 @@ namespace Surveys.Controllers
             return View(user);
         }
         // GET: Users/Success
+        /// <summary>
+        /// Strona potwierdzająca udaną rejestrację
+        /// </summary>
+        /// <returns></returns>
         [AllowAnonymous]
         public IActionResult Success()
         {
-            
             return View();
         }
     }

@@ -16,6 +16,10 @@ namespace TestingSurveys
         private HttpClient _client;
         private IWebDriver _driver;
 
+        /// <summary>
+        /// Ustanowienie po³¹czenia z przegl¹dark¹ i bazy danych w pamiêci.
+        /// Tylko raz na test
+        /// </summary>
         [OneTimeSetUp]
         public void Setup()
         {
@@ -25,10 +29,6 @@ namespace TestingSurveys
             _client = _server.CreateClient();
             var options = new FirefoxOptions();
             options.AcceptInsecureCertificates = true;
-            //options.SetPreference("browser.cache.disk.enable", false);
-            //options.SetPreference("browser.cache.memory.enable", false);
-            //options.SetPreference("browser.cache.offline.enable", false);
-            //options.SetPreference("network.http.use-cache", false);
             _driver = new FirefoxDriver(options);//@"C:\Users\damia\Downloads\edgedriver_win64"
             Factory.context.Roles.Add(new Surveys.Model.Role() { RoleName = "Owner" });
             Factory.context.Roles.Add(new Surveys.Model.Role() { RoleName = "Admin" });
@@ -36,6 +36,9 @@ namespace TestingSurveys
             Factory.context.SaveChanges();
             CreateTestUser();
         }
+        /// <summary>
+        /// Zamkniêcie ca³ego testu
+        /// </summary>
         [OneTimeTearDown]
         public void Stop()
         {
@@ -44,6 +47,9 @@ namespace TestingSurveys
             _server.Dispose();
             // _driver.Close();
         }
+        /// <summary>
+        /// Test pustego formularza rejestracyjnego
+        /// </summary>
         [Test]
         public void InvalidRegisterData()
         {
@@ -55,6 +61,9 @@ namespace TestingSurveys
             foreach (var error in errors)
                 Assert.NotNull(error.Text);
         }
+        /// <summary>
+        /// Test niezgadzaj¹cych siê hase³ przy rejestracji
+        /// </summary>
         [Test]
         public void InvalidConfirmPassword()
         {
@@ -69,6 +78,10 @@ namespace TestingSurveys
             foreach (var error in errors)
                 Assert.NotNull(error.Text);
         }
+
+        /// <summary>
+        /// SprawdŸ czy u¿ytkownik ju¿ istnieje
+        /// </summary>
         [Test]
         public void UserAlreadyExists()
         {
@@ -96,6 +109,9 @@ namespace TestingSurveys
             _driver.FindElement(By.Id("loginButton")).Submit();
             Thread.Sleep(1000);
         }
+        /// <summary>
+        /// Test rejestracji i logowania wiêcej ni¿ jednego u¿ytkownika
+        /// </summary>
         [Test]
         public void CreateAndLogInAnotherTestUser()
         {
@@ -113,6 +129,9 @@ namespace TestingSurveys
             Thread.Sleep(1000);
             Assert.False(_driver.Url == $"{_server.RootUri}/Account/Login");
         }
+        /// <summary>
+        /// Test pustego formularza logowania
+        /// </summary>
         [Test]
         public void InvalidLoginData()
         {
@@ -124,6 +143,9 @@ namespace TestingSurveys
             foreach (var error in errors)
                 Assert.NotNull(error.Text);
         }
+        /// <summary>
+        /// Test b³êdnego has³a
+        /// </summary>
         [Test]
         public void InvalidLoginPassword()
         {
@@ -137,12 +159,19 @@ namespace TestingSurveys
             foreach (var error in errors)
                 Assert.NotNull(error.Text);
         }
+
+        /// <summary>
+        /// Test poprawnego logowania
+        /// </summary>
         [Test]
         public void ValidLogin()
         {
             LogInTestUser();
             Assert.False(_driver.Url == $"{_server.RootUri}/Account/Login");
         }
+        /// <summary>
+        /// Test pustego formularza tworzenia ankiety
+        /// </summary>
         [Test]
         public void InvalidSurveyData()
         {
@@ -156,6 +185,9 @@ namespace TestingSurveys
             foreach (var error in errors)
                 Assert.NotNull(error.Text);
         }
+        /// <summary>
+        /// Test tworzenia ankiety zawieraj¹cej pytanie zamkniête, wielokrotnego wyboru i otwarte
+        /// </summary>
         [Test]
         public void CreateSampleSurvey()
         {
@@ -208,6 +240,9 @@ namespace TestingSurveys
             Assert.True(_driver.Url == $"{_server.RootUri}/Surveys");
 
         }
+        /// <summary>
+        /// Test pustego formularza do wype³niania ankiet 
+        /// </summary>
         [Test]
         public void InvalidCompleteSampleSurvey()
         {
@@ -222,6 +257,9 @@ namespace TestingSurveys
             foreach (var error in errors)
                 Assert.NotNull(error.Text);
         }
+        /// <summary>
+        /// Test poprawnego wype³niania ankiet
+        /// </summary>
         [Test]
         public void CompleteSampleSurvey()
         {
@@ -240,6 +278,9 @@ namespace TestingSurveys
             Thread.Sleep(1000);
             Assert.True(_driver.Url == $"{_server.RootUri}/Surveys/Success");
         }
+        /// <summary>
+        /// Test nieautoryzowanego wejœcia na chronion¹ stronê
+        /// </summary>
         [Test]
         public void UnauthorizedAcces()
         {

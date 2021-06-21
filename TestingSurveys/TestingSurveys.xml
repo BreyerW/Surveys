@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>TestingSurveys</name>
+    </assembly>
+    <members>
+        <member name="M:TestingSurveys.Tests.Setup">
+            <summary>
+            Ustanowienie połączenia z przeglądarką i bazy danych w pamięci.
+            Tylko raz na test
+            </summary>
+        </member>
+        <member name="M:TestingSurveys.Tests.Stop">
+            <summary>
+            Zamknięcie całego testu
+            </summary>
+        </member>
+        <member name="M:TestingSurveys.Tests.InvalidRegisterData">
+            <summary>
+            Test pustego formularza rejestracyjnego
+            </summary>
+        </member>
+        <member name="M:TestingSurveys.Tests.InvalidConfirmPassword">
+            <summary>
+            Test niezgadzających się haseł przy rejestracji
+            </summary>
+        </member>
+        <member name="M:TestingSurveys.Tests.UserAlreadyExists">
+            <summary>
+            Sprawdź czy użytkownik już istnieje
+            </summary>
+        </member>
+        <member name="M:TestingSurveys.Tests.CreateAndLogInAnotherTestUser">
+            <summary>
+            Test rejestracji i logowania więcej niż jednego użytkownika
+            </summary>
+        </member>
+        <member name="M:TestingSurveys.Tests.InvalidLoginData">
+            <summary>
+            Test pustego formularza logowania
+            </summary>
+        </member>
+        <member name="M:TestingSurveys.Tests.InvalidLoginPassword">
+            <summary>
+            Test błędnego hasła
+            </summary>
+        </member>
+        <member name="M:TestingSurveys.Tests.ValidLogin">
+            <summary>
+            Test poprawnego logowania
+            </summary>
+        </member>
+        <member name="M:TestingSurveys.Tests.InvalidSurveyData">
+            <summary>
+            Test pustego formularza tworzenia ankiety
+            </summary>
+        </member>
+        <member name="M:TestingSurveys.Tests.CreateSampleSurvey">
+            <summary>
+            Test tworzenia ankiety zawierającej pytanie zamknięte, wielokrotnego wyboru i otwarte
+            </summary>
+        </member>
+        <member name="M:TestingSurveys.Tests.InvalidCompleteSampleSurvey">
+            <summary>
+            Test pustego formularza do wypełniania ankiet 
+            </summary>
+        </member>
+        <member name="M:TestingSurveys.Tests.CompleteSampleSurvey">
+            <summary>
+            Test poprawnego wypełniania ankiet
+            </summary>
+        </member>
+        <member name="M:TestingSurveys.Tests.UnauthorizedAcces">
+            <summary>
+            Test nieautoryzowanego wejścia na chronioną stronę
+            </summary>
+        </member>
+    </members>
+</doc>

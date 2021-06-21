@@ -19,7 +19,12 @@ namespace Surveys
         {
             _context = context;
         }
-
+        /// <summary>
+        /// Metoda do uwierzytelniania i logowania użytkownika
+        /// </summary>
+        /// <param name="username">Podana nazwa użytkownika</param>
+        /// <param name="password">Podane hasło</param>
+        /// <returns></returns>
         public User Authenticate(string username, string password)
         {
 
@@ -34,7 +39,7 @@ namespace Surveys
                     byte[] salt = new byte[SaltSize];
                     Buffer.BlockCopy(bytes, 0, salt, 0, salt.Length);
                     byte[] expectedSubkey = new byte[Pbkdf2SubkeyLength];
-                    Buffer.BlockCopy(bytes,  salt.Length, expectedSubkey, 0, expectedSubkey.Length);
+                    Buffer.BlockCopy(bytes, salt.Length, expectedSubkey, 0, expectedSubkey.Length);
                     string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
                         password: password,
                         salt: salt,

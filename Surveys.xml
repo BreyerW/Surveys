@@ -1,0 +1,228 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Surveys</name>
+    </assembly>
+    <members>
+        <member name="M:Surveys.AuthService.Authenticate(System.String,System.String)">
+            <summary>
+            Metoda do uwierzytelniania i logowania użytkownika
+            </summary>
+            <param name="username">Podana nazwa użytkownika</param>
+            <param name="password">Podane hasło</param>
+            <returns></returns>
+        </member>
+        <member name="M:Surveys.Controllers.AccountController.Login">
+            <summary>
+            Strona logowania
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Surveys.Controllers.AccountController.Login(Surveys.Model.LoginData)">
+            <summary>
+            Akcja logowania
+            </summary>
+            <param name="login">Struktura zawierająca dane logowania</param>
+            <returns></returns>
+        </member>
+        <member name="M:Surveys.Controllers.AccountController.Logout">
+            <summary>
+            Akcja wylogowania
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Surveys.Controllers.AccountController.Create">
+            <summary>
+            Strona rejestracji
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Surveys.Controllers.AccountController.Create(Surveys.Model.User)">
+            <summary>
+            Akcja rejestracji
+            </summary>
+            <param name="user">Struktura zawierająca dane potrzebne do rejestracji</param>
+            <returns></returns>
+        </member>
+        <member name="M:Surveys.Controllers.AccountController.Success">
+            <summary>
+            Strona potwierdzająca udaną rejestrację
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Surveys.Controllers.HomeController.Index">
+            <summary>
+            Strona startowa
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Surveys.Controllers.HomeController.Privacy">
+            <summary>
+            Strona z polityką prywatności
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Surveys.Controllers.HomeController.Error">
+            <summary>
+            Generyczna strona błędu
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Surveys.Controllers.SurveysController.IndexUncompletedSurveys">
+            <summary>
+            Strona zwracająca niewypełnione ankiety
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Surveys.Controllers.SurveysController.IndexCreatedSurveys">
+            <summary>
+            Strona zwracająca utworzone ankiety
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Surveys.Controllers.SurveysController.Success(System.String)">
+            <summary>
+            Strona potwierdzająca przyjęcie wypełnionej ankiety i pokazująca wyliczony hash.
+            </summary>
+            <param name="hash">Wyliczony dla wypełnionej ankiety hash</param>
+            <returns></returns>
+        </member>
+        <member name="M:Surveys.Controllers.SurveysController.Export(System.Nullable{System.Int32})">
+            <summary>
+            Akcja eksportowania statystyk do pliku JSON
+            </summary>
+            <param name="id">ID ankiety dla której wyeksportować statystyki do pliku JSON</param>
+            <returns></returns>
+        </member>
+        <member name="M:Surveys.Controllers.SurveysController.Statistics(System.Nullable{System.Int32})">
+            <summary>
+            Strona ze statystykami wybranej ankiety i akcją eksportu do pilku JSON
+            </summary>
+            <param name="id">ID wybranej ankiety</param>
+            <returns></returns>
+        </member>
+        <member name="M:Surveys.Controllers.SurveysController.Complete(System.Nullable{System.Int32})">
+            <summary>
+            Strona wypełniania ankiety
+            </summary>
+            <param name="id">ID ankiety do załadowania w celu wypełnienia</param>
+            <returns></returns>
+        </member>
+        <member name="M:Surveys.Controllers.SurveysController.Complete(System.Nullable{System.Int32},System.String[][])">
+            <summary>
+            Akcja wysyłania wypełnionej ankiety
+            </summary>
+            <param name="id">ID wypełnionej ankiety</param>
+            <param name="answer">Lista odpowiedzi udzielona przez użytkownika</param>
+            <returns></returns>
+        </member>
+        <member name="M:Surveys.Controllers.SurveysController.Create">
+            <summary>
+            Strona kreatora ankiet
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Surveys.Controllers.SurveysController.Create(Surveys.Model.Survey,System.String,System.String,System.String,System.String[],System.Boolean[][],System.String[][],System.String,System.String,System.String,System.String)">
+            <summary>
+            Akcja wysłania ankiety do użytkowników w celu wypełnienia
+            </summary>
+            <param name="survey">Tytuł i reguły ankiety</param>
+            <param name="new">Nie jest puste jeśli został wciśnięty przycisk Nowe pytanie</param>
+            <param name="create">Nie jest puste jeśli został wciśnięty przycisk Utwórz ankietę</param>
+            <param name="create_answer">Nie jest puste jeśli został wciśnięty przycisk Nowa odpowiedź dla pytania nr.: #</param>
+            <param name="q">Lista pytań</param>
+            <param name="config">Lista konfiguracyjna dla pytań</param>
+            <param name="a">Lista odpowiedzi dla pytań</param>
+            <param name="delete_question">Nie jest puste jeśli został wciśnięty przycisk - (do usuwania pytań)</param>
+            <param name="delete_answer">Nie jest puste jeśli został wciśnięty przycisk - (do usuwania odpowiedzi)</param>
+            <param name="add_existing">Nie jest puste jeśli został wciśnięty przycisk Dodaj</param>
+            <param name="existingQ">ID istniejącego pytania do dodania do szablonu ankiety</param>
+            <returns></returns>
+        </member>
+        <member name="M:Surveys.Controllers.SurveysController.Audit">
+            <summary>
+            Strona pozwalająca sprawdzić integralność ankiety z pomocą zapisanego hasha
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Surveys.Controllers.SurveysController.Audit(System.String,System.String)">
+            <summary>
+            Akcja sprawdzania integralności ankiety z pomocą hasha
+            </summary>
+            <param name="audit">Nie jest puste jeśli został wciśnięty przycisk Sprawdź ankietę</param>
+            <param name="hash">Podany przez użytkownika hash</param>
+            <returns></returns>
+        </member>
+        <member name="M:TestingSurveys.Tests.Setup">
+            <summary>
+            Ustanowienie połączenia z przeglądarką i bazy danych w pamięci.
+            Tylko raz na test
+            </summary>
+        </member>
+        <member name="M:TestingSurveys.Tests.Stop">
+            <summary>
+            Zamknięcie całego testu
+            </summary>
+        </member>
+        <member name="M:TestingSurveys.Tests.InvalidRegisterData">
+            <summary>
+            Test pustego formularza rejestracyjnego
+            </summary>
+        </member>
+        <member name="M:TestingSurveys.Tests.InvalidConfirmPassword">
+            <summary>
+            Test niezgadzających się haseł przy rejestracji
+            </summary>
+        </member>
+        <member name="M:TestingSurveys.Tests.UserAlreadyExists">
+            <summary>
+            Sprawdź czy użytkownik już istnieje
+            </summary>
+        </member>
+        <member name="M:TestingSurveys.Tests.CreateAndLogInAnotherTestUser">
+            <summary>
+            Test rejestracji i logowania więcej niż jednego użytkownika
+            </summary>
+        </member>
+        <member name="M:TestingSurveys.Tests.InvalidLoginData">
+            <summary>
+            Test pustego formularza logowania
+            </summary>
+        </member>
+        <member name="M:TestingSurveys.Tests.InvalidLoginPassword">
+            <summary>
+            Test błędnego hasła
+            </summary>
+        </member>
+        <member name="M:TestingSurveys.Tests.ValidLogin">
+            <summary>
+            Test poprawnego logowania
+            </summary>
+        </member>
+        <member name="M:TestingSurveys.Tests.InvalidSurveyData">
+            <summary>
+            Test pustego formularza tworzenia ankiety
+            </summary>
+        </member>
+        <member name="M:TestingSurveys.Tests.CreateSampleSurvey">
+            <summary>
+            Test tworzenia ankiety zawierającej pytanie zamknięte, wielokrotnego wyboru i otwarte
+            </summary>
+        </member>
+        <member name="M:TestingSurveys.Tests.InvalidCompleteSampleSurvey">
+            <summary>
+            Test pustego formularza do wypełniania ankiet 
+            </summary>
+        </member>
+        <member name="M:TestingSurveys.Tests.CompleteSampleSurvey">
+            <summary>
+            Test poprawnego wypełniania ankiet
+            </summary>
+        </member>
+        <member name="M:TestingSurveys.Tests.UnauthorizedAcces">
+            <summary>
+            Test nieautoryzowanego wejścia na chronioną stronę
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -22,14 +22,11 @@ namespace Surveys.Controllers
         {
             _context = context;
         }
-
         // GET: Surveys
-        public async Task<IActionResult> Index()
-        {
-            var surveyContext = _context.Surveys.Include(s => s.IdUserNavigation);
-            return View(await surveyContext.ToListAsync());
-        }
-        // GET: Surveys
+        /// <summary>
+        /// Strona zwracająca niewypełnione ankiety
+        /// </summary>
+        /// <returns></returns>
         [Authorize]//(Roles = "Admin,User,Owner")
         public async Task<IActionResult> IndexUncompletedSurveys()
         {
@@ -37,17 +34,31 @@ namespace Surveys.Controllers
             return View(await surveyContext.ToListAsync());
         }
         // GET: Surveys
+        /// <summary>
+        /// Strona zwracająca utworzone ankiety
+        /// </summary>
+        /// <returns></returns>
         [Authorize]//(Roles = "Admin,User,Owner")
         public async Task<IActionResult> IndexCreatedSurveys()
         {
             var surveyContext = _context.Surveys.Where(s => s.IdUserNavigation.Id == int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)));
             return View(await surveyContext.ToListAsync());
         }
+        /// <summary>
+        /// Strona potwierdzająca przyjęcie wypełnionej ankiety i pokazująca wyliczony hash.
+        /// </summary>
+        /// <param name="hash">Wyliczony dla wypełnionej ankiety hash</param>
+        /// <returns></returns>
         public IActionResult Success(string hash)
         {
             ViewData["computedHash"] = hash;
             return View();
         }
+        /// <summary>
+        /// Akcja eksportowania statystyk do pliku JSON
+        /// </summary>
+        /// <param name="id">ID ankiety dla której wyeksportować statystyki do pliku JSON</param>
+        /// <returns></returns>
         public IActionResult Export(int? id)
         {
             if (id == null)
@@ -112,6 +123,11 @@ namespace Surveys.Controllers
             return File(jsonString, "application/json", $"{survey.Topic}.json");
         }
         // GET: Surveys/Statistics/5
+        /// <summary>
+        /// Strona ze statystykami wybranej ankiety i akcją eksportu do pilku JSON
+        /// </summary>
+        /// <param name="id">ID wybranej ankiety</param>
+        /// <returns></returns>
         public async Task<IActionResult> Statistics(int? id)
         {
             if (id == null)
@@ -173,6 +189,11 @@ namespace Surveys.Controllers
             return View(survey);
         }
         // GET: Surveys/Complete/5
+        /// <summary>
+        /// Strona wypełniania ankiety
+        /// </summary>
+        /// <param name="id">ID ankiety do załadowania w celu wypełnienia</param>
+        /// <returns></returns>
         public async Task<IActionResult> Complete(int? id)
         {
             if (id == null)
@@ -195,6 +216,12 @@ namespace Surveys.Controllers
         // POST: Surveys/Complete/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// Akcja wysyłania wypełnionej ankiety
+        /// </summary>
+        /// <param name="id">ID wypełnionej ankiety</param>
+        /// <param name="answer">Lista odpowiedzi udzielona przez użytkownika</param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Complete(int? id, string[][] answer)
@@ -287,26 +314,12 @@ namespace Surveys.Controllers
 
             return View(survey);
         }
-        // GET: Surveys/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var survey = await _context.Surveys
-                .Include(s => s.IdUserNavigation)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (survey == null)
-            {
-                return NotFound();
-            }
-
-            return View(survey);
-        }
 
         // GET: Surveys/Create
+        /// <summary>
+        /// Strona kreatora ankiet
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Create()
         {
             ViewData["contents"] = contents;
@@ -322,6 +335,21 @@ namespace Surveys.Controllers
         // POST: Surveys/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// Akcja wysłania ankiety do użytkowników w celu wypełnienia
+        /// </summary>
+        /// <param name="survey">Tytuł i reguły ankiety</param>
+        /// <param name="new">Nie jest puste jeśli został wciśnięty przycisk Nowe pytanie</param>
+        /// <param name="create">Nie jest puste jeśli został wciśnięty przycisk Utwórz ankietę</param>
+        /// <param name="create_answer">Nie jest puste jeśli został wciśnięty przycisk Nowa odpowiedź dla pytania nr.: #</param>
+        /// <param name="q">Lista pytań</param>
+        /// <param name="config">Lista konfiguracyjna dla pytań</param>
+        /// <param name="a">Lista odpowiedzi dla pytań</param>
+        /// <param name="delete_question">Nie jest puste jeśli został wciśnięty przycisk - (do usuwania pytań)</param>
+        /// <param name="delete_answer">Nie jest puste jeśli został wciśnięty przycisk - (do usuwania odpowiedzi)</param>
+        /// <param name="add_existing">Nie jest puste jeśli został wciśnięty przycisk Dodaj</param>
+        /// <param name="existingQ">ID istniejącego pytania do dodania do szablonu ankiety</param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Topic,MinBirthYear,MaxBirthYear,Sex")] Survey survey, string @new, string create, string create_answer, string[] q, bool[][] config, string[][] a, string delete_question, string delete_answer, string add_existing, string existingQ)
@@ -425,6 +453,10 @@ namespace Surveys.Controllers
 
         }
         // GET: Surveys/Audit
+        /// <summary>
+        /// Strona pozwalająca sprawdzić integralność ankiety z pomocą zapisanego hasha
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Audit()
         {
             return View();
@@ -433,6 +465,12 @@ namespace Surveys.Controllers
         // POST: Surveys/Audit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// Akcja sprawdzania integralności ankiety z pomocą hasha
+        /// </summary>
+        /// <param name="audit">Nie jest puste jeśli został wciśnięty przycisk Sprawdź ankietę</param>
+        /// <param name="hash">Podany przez użytkownika hash</param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Audit(string audit, string hash)
