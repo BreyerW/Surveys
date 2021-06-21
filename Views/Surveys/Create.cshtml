@@ -62,7 +62,7 @@
     </div>
     <div class="col-md-10">
         <select name="existingQ" class="form-control">
-            <option value="" selected>Wybierz z istniejących pytań</option>
+            <option value="-1" selected>Wybierz z istniejących pytań</option>
             @foreach (var e in existingContents)
             {
                 <option value="@e.IdQuestion">@e.IdQuestionNavigation.Question1</option>
@@ -88,7 +88,7 @@
                 </span>
             }
 
-            <input type="text" name="q[@i]" class="form-control" value=@contents[i].IdQuestionNavigation.Question1 />
+            <input type="text" name="q[@i]" class="form-control" value="@contents[i].IdQuestionNavigation.Question1" />
             <label class="form-label">Odpowiedź wymagana?&nbsp;</label>@Html.CheckBox($"config[{i}][0]", @contents[i].Required, new { @class = "form-checkbox" })
             <label class="form-label">&nbsp;|&nbsp; Zezwolić na wiele odpowiedzi?&nbsp;</label>
             @Html.CheckBox($"config[{i}][1]", @contents[i].AllowMultipleAnswers, new { @class = "form-checkbox" })
@@ -101,7 +101,7 @@
                 {
                     <div class="input-group mb-3" style="margin-left:10%">
                         <button type="submit" name="delete_answer" value="@i,@j" class="btn btn-primary" style="margin-right:11px;">-</button>
-                        <input type="text" name="a[@i][@j]" class="form-control" value=@answer.Answer />
+                        <input type="text" name="a[@i][@j]" class="form-control" value="@answer.Answer" />
                     </div>
                     j++;
 

@@ -1,0 +1,31 @@
+﻿@model IEnumerable<Surveys.Model.Survey>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Twoje ankiety</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Topic)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Topic)
+                </td>
+                <td>
+                    <a asp-action="Statistics" asp-route-id="@item.Id">Statystyki</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

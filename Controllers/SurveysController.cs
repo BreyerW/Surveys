@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Blake3;
 using Microsoft.AspNetCore.Authorization;
@@ -35,10 +36,141 @@ namespace Surveys.Controllers
             var surveyContext = _context.Surveys;//.Where(s => s.IdUserNavigation.Id != int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)));
             return View(await surveyContext.ToListAsync());
         }
+        // GET: Surveys
+        [Authorize]//(Roles = "Admin,User,Owner")
+        public async Task<IActionResult> IndexCreatedSurveys()
+        {
+            var surveyContext = _context.Surveys.Where(s => s.IdUserNavigation.Id == int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)));
+            return View(await surveyContext.ToListAsync());
+        }
         public IActionResult Success(string hash)
         {
             ViewData["computedHash"] = hash;
             return View();
+        }
+        public IActionResult Export(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var counters = new Dictionary<string, Dictionary<string, int>>();
+            var id_user = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var eligibleUsers = _context.Users.Count();//.Where(u => u.Id != id_user)
+            var surveysCompleted = _context.SubmittedSurveys.Where(i => i.IdSurvey == id.Value).Count();
+            var survey = _context.Surveys.Find(id);
+            if (survey == null)
+            {
+                return NotFound();
+            }
+            counters.Add("SurveyData", new Dictionary<string, int>());
+            //counters["SurveyData"][nameof(eligibleUsers)] = eligibleUsers;
+            counters["SurveyData"].Add(nameof(surveysCompleted), surveysCompleted);
+            var contents = _context.SurveysContents
+                .Where((s) => s.IdSurvey == id.Value)
+                .Include(s => s.IdSurveyNavigation)
+                .Include(s => s.IdQuestionNavigation)
+                .Include(s => s.IdQuestionNavigation.PredefinedAnswers)
+                .ToList();
+            var answers = _context.SubmittedSurveyAnswers
+                 .Include(s => s.IdSubmittedSurveyNavigation)
+                 .ThenInclude(s => s.IdSurveyNavigation)
+                 .Where(s => s.IdSubmittedSurveyNavigation.IdSurveyNavigation.Id == id.Value)
+                 .Include(s => s.IdQuestionNavigation)
+                 .Include(s => s.IdQuestionNavigation.PredefinedAnswers)
+                 .ToList();
+
+            foreach (var answer in answers)
+            {
+                if (counters.ContainsKey(answer.IdQuestionNavigation.Question1) is false)
+                    counters.Add(answer.IdQuestionNavigation.Question1, new Dictionary<string, int>());
+                var currItem = contents.First(i => i.IdQuestion == answer.IdQuestion);
+                if (currItem.IdQuestionNavigation.PredefinedAnswers.Count > 1)
+                {
+                    var k = 0;
+                    var arr = answer.Answers.Split(',');
+                    foreach (var a in currItem.IdQuestionNavigation.PredefinedAnswers)
+                    {
+                        if (counters[answer.IdQuestionNavigation.Question1].ContainsKey(a.Answer) is false)
+                            counters[answer.IdQuestionNavigation.Question1].Add(a.Answer, 0);
+                        if (currItem.AllowMultipleAnswers && arr[k] is "true")
+                            counters[answer.IdQuestionNavigation.Question1][a.Answer] += 1;
+                        else if (arr[0] == a.Answer)
+                            counters[answer.IdQuestionNavigation.Question1][a.Answer] += 1;
+                        k++;
+                    }
+                }
+                else
+                {
+                    if (counters[answer.IdQuestionNavigation.Question1].ContainsKey("pytanie otwarte") is false)
+                        counters[answer.IdQuestionNavigation.Question1].Add("pytanie otwarte", 0);
+                    if (string.IsNullOrEmpty(answer.Answers) is false)
+                        counters[answer.IdQuestionNavigation.Question1]["pytanie otwarte"] += 1;
+                }
+            }
+            byte[] jsonString = JsonSerializer.SerializeToUtf8Bytes(counters);
+            return File(jsonString, "application/json", $"{survey.Topic}.json");
+        }
+        // GET: Surveys/Statistics/5
+        public async Task<IActionResult> Statistics(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var contents = _context.SurveysContents
+                .Where((s) => s.IdSurvey == id.Value)
+                .Include(s => s.IdSurveyNavigation)
+                .Include(s => s.IdQuestionNavigation)
+                .Include(s => s.IdQuestionNavigation.PredefinedAnswers)
+                .ToList();
+            var answers = _context.SubmittedSurveyAnswers
+                 .Include(s => s.IdSubmittedSurveyNavigation)
+                 .ThenInclude(s => s.IdSurveyNavigation)
+                 .Where(s => s.IdSubmittedSurveyNavigation.IdSurveyNavigation.Id == id.Value)
+                 .Include(s => s.IdQuestionNavigation)
+                 .Include(s => s.IdQuestionNavigation.PredefinedAnswers)
+                 .ToList();
+            var counters = new Dictionary<int, Dictionary<int, int>>();
+            foreach (var answer in answers)
+            {
+                if (counters.ContainsKey(answer.IdQuestion) is false)
+                    counters.Add(answer.IdQuestion, new Dictionary<int, int>());
+                var currItem = contents.First(i => i.IdQuestion == answer.IdQuestion);
+                if (currItem.IdQuestionNavigation.PredefinedAnswers.Count > 1)
+                {
+                    var k = 0;
+                    var arr = answer.Answers.Split(',');
+                    foreach (var a in currItem.IdQuestionNavigation.PredefinedAnswers)
+                    {
+                        if (counters[answer.IdQuestion].ContainsKey(k) is false)
+                            counters[answer.IdQuestion].Add(k, 0);
+                        if (currItem.AllowMultipleAnswers && arr[k] is "true")
+                            counters[answer.IdQuestion][k] += 1;
+                        else if (arr[0] == a.Answer)
+                            counters[answer.IdQuestion][k] += 1;
+                        k++;
+                    }
+                }
+                else
+                {
+                    if (counters[answer.IdQuestion].ContainsKey(0) is false)
+                        counters[answer.IdQuestion].Add(0, 0);
+                    if (string.IsNullOrEmpty(answer.Answers) is false)
+                        counters[answer.IdQuestion][0] += 1;
+                }
+            }
+            ViewData[nameof(contents)] = contents;
+            ViewData[nameof(counters)] = counters;
+            var id_user = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            ViewData["eligibleUsers"] = _context.Users.Count();//.Where(u => u.Id != id_user)
+            ViewData["surveysCompleted"] = _context.SubmittedSurveys.Where(i => i.IdSurvey == id.Value).Count();
+            var survey = await _context.Surveys.FindAsync(id);
+            if (survey == null)
+            {
+                return NotFound();
+            }
+            return View(survey);
         }
         // GET: Surveys/Complete/5
         public async Task<IActionResult> Complete(int? id)
@@ -57,7 +189,6 @@ namespace Surveys.Controllers
             {
                 return NotFound();
             }
-            //ViewData["IdUser"] = new SelectList(_context.Users, "Id", "BirthYear", survey.IdUser);
             return View(survey);
         }
 
@@ -193,7 +324,7 @@ namespace Surveys.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Topic,MinBirthYear,MaxBirthYear,Sex")] Survey survey, string @new, string create, string create_answer, string[] q, bool[][] config, string[][] a, string delete_question, string delete_answer)
+        public async Task<IActionResult> Create([Bind("Topic,MinBirthYear,MaxBirthYear,Sex")] Survey survey, string @new, string create, string create_answer, string[] q, bool[][] config, string[][] a, string delete_question, string delete_answer, string add_existing, string existingQ)
         {
             var j = 0;
             foreach (var content in contents)
@@ -255,7 +386,12 @@ namespace Surveys.Controllers
                 var toBeRemoved = contents[id_q].IdQuestionNavigation.PredefinedAnswers.ElementAt(id_a);
                 contents[id_q].IdQuestionNavigation.PredefinedAnswers.Remove(toBeRemoved);
             }
-
+            else if (string.IsNullOrEmpty(add_existing) is false)
+            {
+                var id = int.Parse(existingQ);
+                var question = _context.Questions.Where(i => i.Id == id).Include(s => s.PredefinedAnswers).First();
+                contents.Add(new SurveysContent() { IdQuestionNavigation = question });
+            }
             if (ModelState.IsValid)
             {
                 if (string.IsNullOrEmpty(create_answer) is false)
@@ -281,7 +417,7 @@ namespace Surveys.Controllers
             }
             return View(survey); ;
         }
-        public void AddNewQuestion(Survey s)
+        private void AddNewQuestion(Survey s)
         {
             var question = new Question();
             question.PredefinedAnswers.Add(new PredefinedAnswer());

@@ -1,0 +1,60 @@
+﻿@model Surveys.Model.Survey
+
+@{
+    ViewData["Title"] = "Complete";
+    var contents = ViewData["contents"] as List<Surveys.Model.SurveysContent>;
+    var counters = ViewData["counters"] as Dictionary<int, Dictionary<int, int>>;
+    int eligibleUsers = (int)ViewData[nameof(eligibleUsers)];
+    int surveysCompleted = (int)ViewData[nameof(surveysCompleted)];
+    double surveysCompletedInPercent = (surveysCompleted / eligibleUsers) * 100;
+}
+<h4>@Model.Topic</h4>
+<hr />
+
+<form asp-action="Export" method="post" class="row g-3">
+
+    <div class="form-group col-12">
+        <br />
+        <h4>Statystyka odpowiedzi</h4>
+        <hr />
+    </div>
+    <ol>
+        <li><b>Liczba rozesłanych ankiet: </b>@eligibleUsers</li>
+        <li><b>Liczba wypełnionych ankiet: </b>@surveysCompleted</li>
+        <li><b>Złożono w procentach: </b>@surveysCompletedInPercent %</li>
+        @for (var i = 0; i < contents.Count; i++)
+        {
+            <li>
+                @contents[i].IdQuestionNavigation.Question1
+                <ul>
+                    @{
+                        var j = 0;
+                        if (contents[i].IdQuestionNavigation.PredefinedAnswers.Count > 1)
+                        {
+                            var k = 0;
+                            @foreach (var answer in contents[i].IdQuestionNavigation.PredefinedAnswers)
+                            {
+                                <li><b>@answer.Answer</b> - Wybrane @counters[contents[i].IdQuestionNavigation.Id][k] razy, @((counters[contents[i].IdQuestionNavigation.Id][k]/surveysCompleted)*100) % w stosunku do liczby wypełnionych ankiet</li>
+                                k++;
+                            }
+
+                        }
+                        else
+                        {
+                            <li><b><i>Pytanie otwarte</i></b> - Odpowiedziano @counters[contents[i].IdQuestionNavigation.Id][0] razy, @((counters[contents[i].IdQuestionNavigation.Id][0]/surveysCompleted)*100) %  w stosunku do liczby wypełnionych ankiet</li>
+                        }
+
+                    }
+                </ul>
+            </li>
+        }
+    </ol>
+    <div class="form-group col-12">
+        <br />
+        <button name="id" value="@Model.Id" class="btn btn-primary">Wyeksportuj do pliku JSON</button>
+    </div>
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
