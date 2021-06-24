@@ -271,12 +271,12 @@ namespace TestingSurveys
 
             _driver.FindElement(By.Name("answer[0][0]")).SendKeys("bla bla bla");
             _driver.FindElement(By.CssSelector("input[type=radio][value='Kobieta']")).Click();
-            _driver.FindElement(By.Name("answer[2][0]")).Click();
-            _driver.FindElement(By.Name("answer[2][2]")).Click();
+            _driver.FindElement(By.Name("answer[0][0]")).Click();
+            _driver.FindElement(By.Name("answer[0][2]")).Click();
             _driver.FindElement(By.Name("complete")).Submit();
 
             Thread.Sleep(1000);
-            Assert.True(_driver.Url == $"{_server.RootUri}/Surveys/Success");
+            Assert.True(_driver.Url.StartsWith($"{_server.RootUri}/Surveys/Success?hash="));
         }
         /// <summary>
         /// Test nieautoryzowanego wejœcia na chronion¹ stronê
@@ -284,9 +284,9 @@ namespace TestingSurveys
         [Test]
         public void UnauthorizedAcces()
         {
-            //var btn = _driver.FindElement(By.Id("logoutButton"));
-            //if (btn is not null)
-            //    btn.Click();
+            var btn = _driver.FindElements(By.Id("logoutButton"));
+            if (btn is not null && btn.Count is 1 && btn[0] is IWebElement elem)
+                elem.Click();
             _driver.Navigate().GoToUrl($"{_server.RootUri}/Surveys/IndexUncompletedSurveys");
 
             Thread.Sleep(1000);

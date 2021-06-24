@@ -16,97 +16,97 @@
             <summary>
             Strona logowania
             </summary>
-            <returns></returns>
+            <returns>Widok strony logowania</returns>
         </member>
         <member name="M:Surveys.Controllers.AccountController.Login(Surveys.Model.LoginData)">
             <summary>
             Akcja logowania
             </summary>
             <param name="login">Struktura zawierająca dane logowania</param>
-            <returns></returns>
+            <returns>Widok strony logowania lub strony głównej po udanym logowaniu</returns>
         </member>
         <member name="M:Surveys.Controllers.AccountController.Logout">
             <summary>
             Akcja wylogowania
             </summary>
-            <returns></returns>
+            <returns>widok strony głównej</returns>
         </member>
         <member name="M:Surveys.Controllers.AccountController.Create">
             <summary>
             Strona rejestracji
             </summary>
-            <returns></returns>
+            <returns>Widok strony rejestracji</returns>
         </member>
         <member name="M:Surveys.Controllers.AccountController.Create(Surveys.Model.User)">
             <summary>
             Akcja rejestracji
             </summary>
             <param name="user">Struktura zawierająca dane potrzebne do rejestracji</param>
-            <returns></returns>
+            <returns>Widok strony rejestracji lub strony powodzenia po udanej rejestracji</returns>
         </member>
         <member name="M:Surveys.Controllers.AccountController.Success">
             <summary>
             Strona potwierdzająca udaną rejestrację
             </summary>
-            <returns></returns>
+            <returns>Widok strony powodzenia rejestracji</returns>
         </member>
         <member name="M:Surveys.Controllers.HomeController.Index">
             <summary>
             Strona startowa
             </summary>
-            <returns></returns>
+            <returns>Widok strony głównej</returns>
         </member>
         <member name="M:Surveys.Controllers.HomeController.Privacy">
             <summary>
             Strona z polityką prywatności
             </summary>
-            <returns></returns>
+            <returns>Widok strony polityki prywatności</returns>
         </member>
         <member name="M:Surveys.Controllers.HomeController.Error">
             <summary>
             Generyczna strona błędu
             </summary>
-            <returns></returns>
+            <returns>Widok strony z błędem</returns>
         </member>
         <member name="M:Surveys.Controllers.SurveysController.IndexUncompletedSurveys">
             <summary>
             Strona zwracająca niewypełnione ankiety
             </summary>
-            <returns></returns>
+            <returns>Widok strony pokazującej niewypełnione ankiety</returns>
         </member>
         <member name="M:Surveys.Controllers.SurveysController.IndexCreatedSurveys">
             <summary>
             Strona zwracająca utworzone ankiety
             </summary>
-            <returns></returns>
+            <returns>Widok strony pokazującej utworzone ankiety</returns>
         </member>
         <member name="M:Surveys.Controllers.SurveysController.Success(System.String)">
             <summary>
             Strona potwierdzająca przyjęcie wypełnionej ankiety i pokazująca wyliczony hash.
             </summary>
             <param name="hash">Wyliczony dla wypełnionej ankiety hash</param>
-            <returns></returns>
+            <returns>Widok strony sukcesu po poprawnym wypełnieniu ankiety</returns>
         </member>
         <member name="M:Surveys.Controllers.SurveysController.Export(System.Nullable{System.Int32})">
             <summary>
             Akcja eksportowania statystyk do pliku JSON
             </summary>
             <param name="id">ID ankiety dla której wyeksportować statystyki do pliku JSON</param>
-            <returns></returns>
+            <returns>Widok strony błędu NotFound lub plik JSON do ściągnięcia ze statystykami wybranej ankiety</returns>
         </member>
         <member name="M:Surveys.Controllers.SurveysController.Statistics(System.Nullable{System.Int32})">
             <summary>
             Strona ze statystykami wybranej ankiety i akcją eksportu do pilku JSON
             </summary>
             <param name="id">ID wybranej ankiety</param>
-            <returns></returns>
+            <returns>Widok strony błędu NotFound lub strony ze statystykami wybranej ankiety</returns>
         </member>
         <member name="M:Surveys.Controllers.SurveysController.Complete(System.Nullable{System.Int32})">
             <summary>
             Strona wypełniania ankiety
             </summary>
             <param name="id">ID ankiety do załadowania w celu wypełnienia</param>
-            <returns></returns>
+            <returns>Widok strony błędu NotFound lub strony z zawartością do wypełnienia wybranej ankiety</returns>
         </member>
         <member name="M:Surveys.Controllers.SurveysController.Complete(System.Nullable{System.Int32},System.String[][])">
             <summary>
@@ -114,13 +114,13 @@
             </summary>
             <param name="id">ID wypełnionej ankiety</param>
             <param name="answer">Lista odpowiedzi udzielona przez użytkownika</param>
-            <returns></returns>
+            <returns>Widok strony błędu NotFound lub strony z zawartością do wypełnienia wybranej ankiety albo strona z podziękowaniami i wyliczonym hashem przy poprawnie wypełnionej ankiecie</returns>
         </member>
         <member name="M:Surveys.Controllers.SurveysController.Create">
             <summary>
             Strona kreatora ankiet
             </summary>
-            <returns></returns>
+            <returns>Widok strony kreatora ankiet</returns>
         </member>
         <member name="M:Surveys.Controllers.SurveysController.Create(Surveys.Model.Survey,System.String,System.String,System.String,System.String[],System.Boolean[][],System.String[][],System.String,System.String,System.String,System.String)">
             <summary>
@@ -137,13 +137,13 @@
             <param name="delete_answer">Nie jest puste jeśli został wciśnięty przycisk - (do usuwania odpowiedzi)</param>
             <param name="add_existing">Nie jest puste jeśli został wciśnięty przycisk Dodaj</param>
             <param name="existingQ">ID istniejącego pytania do dodania do szablonu ankiety</param>
-            <returns></returns>
+            <returns>Widok strony kreatora ankiet lub strony z utworzonymi ankietami w przypadku poprawnego utworzenia ankiety</returns>
         </member>
         <member name="M:Surveys.Controllers.SurveysController.Audit">
             <summary>
             Strona pozwalająca sprawdzić integralność ankiety z pomocą zapisanego hasha
             </summary>
-            <returns></returns>
+            <returns>Widok strony pozwalającej sprawdzić integralność ankiety</returns>
         </member>
         <member name="M:Surveys.Controllers.SurveysController.Audit(System.String,System.String)">
             <summary>
@@ -151,7 +151,7 @@
             </summary>
             <param name="audit">Nie jest puste jeśli został wciśnięty przycisk Sprawdź ankietę</param>
             <param name="hash">Podany przez użytkownika hash</param>
-            <returns></returns>
+            <returns>Widok strony pozwalającej sprawdzić integralność ankiety z komunikatem zwrotnym czy ankieta została naruszona</returns>
         </member>
         <member name="M:TestingSurveys.Tests.Setup">
             <summary>

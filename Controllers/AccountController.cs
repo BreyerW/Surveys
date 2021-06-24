@@ -24,11 +24,11 @@ namespace Surveys.Controllers
             _authService = authService;
             _context = context;
         }
-        
+
         /// <summary>
         /// Strona logowania
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Widok strony logowania</returns>
         public IActionResult Login()
         {
             return View();
@@ -37,7 +37,7 @@ namespace Surveys.Controllers
         /// Akcja logowania
         /// </summary>
         /// <param name="login">Struktura zawierająca dane logowania</param>
-        /// <returns></returns>
+        /// <returns>Widok strony logowania lub strony głównej po udanym logowaniu</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login([Bind("Username,Password")] LoginData login)
@@ -75,7 +75,7 @@ namespace Surveys.Controllers
         /// <summary>
         /// Akcja wylogowania
         /// </summary>
-        /// <returns></returns>
+        /// <returns>widok strony głównej</returns>
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
@@ -86,7 +86,7 @@ namespace Surveys.Controllers
         /// <summary>
         /// Strona rejestracji
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Widok strony rejestracji</returns>
         [AllowAnonymous]
         public IActionResult Create()
         {
@@ -100,7 +100,7 @@ namespace Surveys.Controllers
         /// Akcja rejestracji
         /// </summary>
         /// <param name="user">Struktura zawierająca dane potrzebne do rejestracji</param>
-        /// <returns></returns>
+        /// <returns>Widok strony rejestracji lub strony powodzenia po udanej rejestracji</returns>
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -165,14 +165,13 @@ namespace Surveys.Controllers
                 else
                     ModelState.AddModelError("Username", "Ta nazwa jest już zajęta");
             }
-            //ViewData["IdRole"] = new SelectList(_context.Roles, "Id", "Id", user.IdRole);
             return View(user);
         }
         // GET: Users/Success
         /// <summary>
         /// Strona potwierdzająca udaną rejestrację
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Widok strony powodzenia rejestracji</returns>
         [AllowAnonymous]
         public IActionResult Success()
         {

@@ -26,7 +26,7 @@ namespace Surveys.Controllers
         /// <summary>
         /// Strona zwracająca niewypełnione ankiety
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Widok strony pokazującej niewypełnione ankiety</returns>
         [Authorize]//(Roles = "Admin,User,Owner")
         public async Task<IActionResult> IndexUncompletedSurveys()
         {
@@ -37,7 +37,7 @@ namespace Surveys.Controllers
         /// <summary>
         /// Strona zwracająca utworzone ankiety
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Widok strony pokazującej utworzone ankiety</returns>
         [Authorize]//(Roles = "Admin,User,Owner")
         public async Task<IActionResult> IndexCreatedSurveys()
         {
@@ -48,7 +48,7 @@ namespace Surveys.Controllers
         /// Strona potwierdzająca przyjęcie wypełnionej ankiety i pokazująca wyliczony hash.
         /// </summary>
         /// <param name="hash">Wyliczony dla wypełnionej ankiety hash</param>
-        /// <returns></returns>
+        /// <returns>Widok strony sukcesu po poprawnym wypełnieniu ankiety</returns>
         public IActionResult Success(string hash)
         {
             ViewData["computedHash"] = hash;
@@ -58,7 +58,7 @@ namespace Surveys.Controllers
         /// Akcja eksportowania statystyk do pliku JSON
         /// </summary>
         /// <param name="id">ID ankiety dla której wyeksportować statystyki do pliku JSON</param>
-        /// <returns></returns>
+        /// <returns>Widok strony błędu NotFound lub plik JSON do ściągnięcia ze statystykami wybranej ankiety</returns>
         public IActionResult Export(int? id)
         {
             if (id == null)
@@ -127,7 +127,7 @@ namespace Surveys.Controllers
         /// Strona ze statystykami wybranej ankiety i akcją eksportu do pilku JSON
         /// </summary>
         /// <param name="id">ID wybranej ankiety</param>
-        /// <returns></returns>
+        /// <returns>Widok strony błędu NotFound lub strony ze statystykami wybranej ankiety</returns>
         public async Task<IActionResult> Statistics(int? id)
         {
             if (id == null)
@@ -193,7 +193,7 @@ namespace Surveys.Controllers
         /// Strona wypełniania ankiety
         /// </summary>
         /// <param name="id">ID ankiety do załadowania w celu wypełnienia</param>
-        /// <returns></returns>
+        /// <returns>Widok strony błędu NotFound lub strony z zawartością do wypełnienia wybranej ankiety</returns>
         public async Task<IActionResult> Complete(int? id)
         {
             if (id == null)
@@ -221,7 +221,7 @@ namespace Surveys.Controllers
         /// </summary>
         /// <param name="id">ID wypełnionej ankiety</param>
         /// <param name="answer">Lista odpowiedzi udzielona przez użytkownika</param>
-        /// <returns></returns>
+        /// <returns>Widok strony błędu NotFound lub strony z zawartością do wypełnienia wybranej ankiety albo strona z podziękowaniami i wyliczonym hashem przy poprawnie wypełnionej ankiecie</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Complete(int? id, string[][] answer)
@@ -319,7 +319,7 @@ namespace Surveys.Controllers
         /// <summary>
         /// Strona kreatora ankiet
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Widok strony kreatora ankiet</returns>
         public IActionResult Create()
         {
             ViewData["contents"] = contents;
@@ -349,7 +349,7 @@ namespace Surveys.Controllers
         /// <param name="delete_answer">Nie jest puste jeśli został wciśnięty przycisk - (do usuwania odpowiedzi)</param>
         /// <param name="add_existing">Nie jest puste jeśli został wciśnięty przycisk Dodaj</param>
         /// <param name="existingQ">ID istniejącego pytania do dodania do szablonu ankiety</param>
-        /// <returns></returns>
+        /// <returns>Widok strony kreatora ankiet lub strony z utworzonymi ankietami w przypadku poprawnego utworzenia ankiety</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Topic,MinBirthYear,MaxBirthYear,Sex")] Survey survey, string @new, string create, string create_answer, string[] q, bool[][] config, string[][] a, string delete_question, string delete_answer, string add_existing, string existingQ)
@@ -388,17 +388,6 @@ namespace Surveys.Controllers
                         ModelState.AddModelError($"q[{i}]", "Pytanie nie może być puste");
                     i++;
                 }
-                /*i = 0;
-                foreach (var answers in a)
-                {
-                    foreach (var answer in answers)
-                    {
-                        if (answers.Length > 0 && string.IsNullOrEmpty(answer))
-                            ModelState.AddModelError($"q[{i}]", "Przy wielokrotnych odpowiedziach, żadna odpowiedź nie może być pusta");
-                        else if (answers.Length == 0 && )
-                    }
-                    i++;
-                }*/
             }
             else if (string.IsNullOrEmpty(delete_question) is false)
             {
@@ -443,7 +432,7 @@ namespace Surveys.Controllers
                 }
 
             }
-            return View(survey); ;
+            return View(survey);
         }
         private void AddNewQuestion(Survey s)
         {
@@ -456,7 +445,7 @@ namespace Surveys.Controllers
         /// <summary>
         /// Strona pozwalająca sprawdzić integralność ankiety z pomocą zapisanego hasha
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Widok strony pozwalającej sprawdzić integralność ankiety</returns>
         public IActionResult Audit()
         {
             return View();
@@ -470,7 +459,7 @@ namespace Surveys.Controllers
         /// </summary>
         /// <param name="audit">Nie jest puste jeśli został wciśnięty przycisk Sprawdź ankietę</param>
         /// <param name="hash">Podany przez użytkownika hash</param>
-        /// <returns></returns>
+        /// <returns>Widok strony pozwalającej sprawdzić integralność ankiety z komunikatem zwrotnym czy ankieta została naruszona</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Audit(string audit, string hash)

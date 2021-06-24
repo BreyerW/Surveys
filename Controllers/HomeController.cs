@@ -20,7 +20,7 @@ namespace Surveys.Controllers
         /// <summary>
         /// Strona startowa
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Widok strony głównej</returns>
         public IActionResult Index()
         {
             return View();
@@ -28,7 +28,7 @@ namespace Surveys.Controllers
         /// <summary>
         /// Strona z polityką prywatności
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Widok strony polityki prywatności</returns>
         public IActionResult Privacy()
         {
             return View();
@@ -36,7 +36,7 @@ namespace Surveys.Controllers
         /// <summary>
         /// Generyczna strona błędu
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Widok strony z błędem</returns>
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
