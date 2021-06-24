@@ -33,8 +33,8 @@ Implementacja powinna uzględniać responsywny interfejs. Do zapewnienia anonimo
 
 ## Instalacja
 
-Aplikacja zbudowana z pomocą Visual Studio 2019 i SQL Server Management Studio 2012. Aplikację powinno się dać zbudować też alternatywnymi narzędziami jak Visual Studio Code, narzędzia firmy JetBrains i serwery kompatybilne z SQL Server mogące zaimportować plik .sql.
-Plik .sql zaimportować do wybranego serwera a następnie zmienić właściwość "DefaultConnection" w pliku appsettings.json na wartość wskazującą na Twój lokalny serwer
+Aplikacja zbudowana z pomocą Visual Studio 2019 i SQL Server Management Studio 2012. Aplikację powinno się dać zbudować też alternatywnymi narzędziami jak Visual Studio Code, narzędzia firmy JetBrains i serwery kompatybilne z SQL Server mogące zaimportować plik .bak.
+Plik survey_backup zaimportować do wybranego serwera a następnie zmienić właściwość "DefaultConnection" w pliku appsettings.json na wartość wskazującą na Twój lokalny serwer
 
 ## Dokumentacja
 
