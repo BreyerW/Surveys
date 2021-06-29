@@ -4,6 +4,16 @@
         <name>Surveys</name>
     </assembly>
     <members>
+        <member name="T:Surveys.IAuthService">
+            <summary>
+            Interfejs do uwierzytelniania użytkowników
+            </summary>
+        </member>
+        <member name="T:Surveys.AuthService">
+            <summary>
+            Klasa implementująca interfejs do uwierzytelniania użytkowników
+            </summary>
+        </member>
         <member name="M:Surveys.AuthService.Authenticate(System.String,System.String)">
             <summary>
             Metoda do uwierzytelniania i logowania użytkownika
@@ -11,6 +21,11 @@
             <param name="username">Podana nazwa użytkownika</param>
             <param name="password">Podane hasło</param>
             <returns></returns>
+        </member>
+        <member name="T:Surveys.Controllers.AccountController">
+            <summary>
+            Klasa zawierająca logikę związaną z kontami użytkowników
+            </summary>
         </member>
         <member name="M:Surveys.Controllers.AccountController.Login">
             <summary>
@@ -50,6 +65,11 @@
             </summary>
             <returns>Widok strony powodzenia rejestracji</returns>
         </member>
+        <member name="T:Surveys.Controllers.HomeController">
+            <summary>
+            Klasa zawierająca logikę związaną ze stroną główną
+            </summary>
+        </member>
         <member name="M:Surveys.Controllers.HomeController.Index">
             <summary>
             Strona startowa
@@ -67,6 +87,11 @@
             Generyczna strona błędu
             </summary>
             <returns>Widok strony z błędem</returns>
+        </member>
+        <member name="T:Surveys.Controllers.SurveysController">
+            <summary>
+            Klasa zawierająca logikę związaną z ankietami
+            </summary>
         </member>
         <member name="M:Surveys.Controllers.SurveysController.IndexUncompletedSurveys">
             <summary>
@@ -152,6 +177,101 @@
             <param name="audit">Nie jest puste jeśli został wciśnięty przycisk Sprawdź ankietę</param>
             <param name="hash">Podany przez użytkownika hash</param>
             <returns>Widok strony pozwalającej sprawdzić integralność ankiety z komunikatem zwrotnym czy ankieta została naruszona</returns>
+        </member>
+        <member name="T:Surveys.Models.ErrorViewModel">
+            <summary>
+            Klasa reprezentująca błąd strony
+            </summary>
+        </member>
+        <member name="T:Surveys.Model.LoginData">
+            <summary>
+            Klasa reprezentująca dane potrzebne do logoania
+            </summary>
+        </member>
+        <member name="T:Surveys.Model.PredefinedAnswer">
+            <summary>
+            Klasa reprezentująca rekordy tabeli predefined_answers w bazie danych
+            </summary>
+        </member>
+        <member name="T:Surveys.Model.Question">
+            <summary>
+            Klasa reprezentująca rekordy tabeli questions w bazie danych
+            </summary>
+        </member>
+        <member name="T:Surveys.Model.Role">
+            <summary>
+            Klasa reprezentująca rekordy tabeli roles w bazie danych
+            </summary>
+        </member>
+        <member name="T:Surveys.Model.SubmittedSurvey">
+            <summary>
+            Klasa reprezentująca rekordy tabeli submitted_surveys w bazie danych
+            </summary>
+        </member>
+        <member name="T:Surveys.Model.SubmittedSurveyAnswer">
+            <summary>
+            Klasa reprezentująca rekordy tabeli submitted_survey_answers w bazie danych
+            </summary>
+        </member>
+        <member name="T:Surveys.Model.Survey">
+            <summary>
+            Klasa reprezentująca rekordy tabeli surveys w bazie danych
+            </summary>
+        </member>
+        <member name="T:Surveys.Model.surveyContext">
+            <summary>
+            Klasa reprezentująca kontekst bazę danych
+            </summary>
+        </member>
+        <member name="T:Surveys.Model.SurveysContent">
+            <summary>
+            Klasa reprezentująca rekordy tabeli surveys_content w bazie danych
+            </summary>
+        </member>
+        <member name="T:Surveys.Model.User">
+            <summary>
+            Klasa reprezentująca rekordy tabeli users w bazie danych
+            </summary>
+        </member>
+        <member name="T:Surveys.Program">
+            <summary>
+            Klasa główna z funkcją main
+            </summary>
+        </member>
+        <member name="M:Surveys.Program.CreateHostBuilder(System.String[])">
+            <summary>
+            Pomocnicza funkcja tworząca hosta
+            </summary>
+            <param name="args">argumenty startowe programu</param>
+            <returns>Zwraca nowego hosta</returns>
+        </member>
+        <member name="T:Surveys.Startup">
+            <summary>
+            Klasa konfigurująca środowisko aplikacji i samą aplikację na starcie programu.
+            </summary>
+        </member>
+        <member name="M:Surveys.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Funkcja dodająca i konfigurująca dynamicznie usługi rozszerzające aplikację
+            </summary>
+            <param name="services">kolekcja usług używanych standardowo przez ASP.NET Core</param>
+        </member>
+        <member name="M:Surveys.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+            <summary>
+            Funkcja konfigurująca żądania HTTP.
+            </summary>
+            <param name="app">klasa budująca aplikację</param>
+            <param name="env">klasa reprezentująca środowisko aplikacji internetowej</param>
+        </member>
+        <member name="T:TestingSurveys.Factory">
+            <summary>
+            Fabryka tworząca serwer i hosta na potrzeby testów automatycznych
+            </summary>
+        </member>
+        <member name="T:TestingSurveys.Tests">
+            <summary>
+            Klasa zawierająca testy automatyczne
+            </summary>
         </member>
         <member name="M:TestingSurveys.Tests.Setup">
             <summary>

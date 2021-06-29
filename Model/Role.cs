@@ -5,6 +5,9 @@ using System.Collections.Generic;
 
 namespace Surveys.Model
 {
+    /// <summary>
+    /// Klasa reprezentująca rekordy tabeli roles w bazie danych
+    /// </summary>
     public partial class Role
     {
         public Role()

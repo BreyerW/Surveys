@@ -10,6 +10,9 @@ using System.Linq;
 
 namespace TestingSurveys
 {
+    /// <summary>
+    /// Klasa zawieraj¹ca testy automatyczne
+    /// </summary>
     public class Tests
     {
         private Factory _server;

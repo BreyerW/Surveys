@@ -24,36 +24,36 @@
 */
 var NAVTREE =
 [
-  [ "Dokumentacja Ankiety", "index.html", [
+  [ "Surveys", "index.html", [
+    [ "Aplikacja internetowa do tworzenia i wypełniania ankiet.", "md__c___users_damia_source_repos__surveys__r_e_a_d_m_e.html", [
+      [ "Wymagania", "md__c___users_damia_source_repos__surveys__r_e_a_d_m_e.html#autotoc_md1", [
+        [ "Funkcjonalności dostępne dla wszystkich:", "md__c___users_damia_source_repos__surveys__r_e_a_d_m_e.html#autotoc_md2", null ],
+        [ "Funkcjonalności dostępne jedynie dla zalogowanych użytkowników:", "md__c___users_damia_source_repos__surveys__r_e_a_d_m_e.html#autotoc_md3", null ]
+      ] ],
+      [ "Instalacja", "md__c___users_damia_source_repos__surveys__r_e_a_d_m_e.html#autotoc_md4", null ],
+      [ "Dokumentacja", "md__c___users_damia_source_repos__surveys__r_e_a_d_m_e.html#autotoc_md5", [
+        [ "Autor", "md__c___users_damia_source_repos__surveys__r_e_a_d_m_e.html#autotoc_md6", null ]
+      ] ]
+    ] ],
     [ "The MIT License (MIT)", "md__c___users_damia_source_repos__surveys_wwwroot_lib_jquery_validation__l_i_c_e_n_s_e.html", null ],
     [ "Packages", "namespaces.html", [
-      [ "Packages", "namespaces.html", "namespaces_dup" ],
-      [ "Package Functions", "namespacemembers.html", [
-        [ "All", "namespacemembers.html", null ],
-        [ "Enumerations", "namespacemembers_enum.html", null ]
-      ] ]
+      [ "Packages", "namespaces.html", "namespaces_dup" ]
     ] ],
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
       [ "Class Index", "classes.html", null ],
       [ "Class Hierarchy", "hierarchy.html", "hierarchy" ],
       [ "Class Members", "functions.html", [
-        [ "All", "functions.html", "functions_dup" ],
-        [ "Functions", "functions_func.html", null ],
-        [ "Variables", "functions_vars.html", null ],
-        [ "Properties", "functions_prop.html", null ]
+        [ "All", "functions.html", null ],
+        [ "Functions", "functions_func.html", null ]
       ] ]
-    ] ],
-    [ "Files", "files.html", [
-      [ "File List", "files.html", "files_dup" ]
     ] ]
   ] ]
 ];
 
 var NAVTREEINDEX =
 [
-"___layout_8cshtml_8g_8cs.html",
-"class_surveys_1_1_model_1_1_surveys_content.html#a4e2bec5c4063a4c69ee02c0fbbe7a164"
+"annotated.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

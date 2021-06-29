@@ -7,11 +7,16 @@ using System.Security.Cryptography;
 
 namespace Surveys
 {
+    /// <summary>
+    /// Interfejs do uwierzytelniania użytkowników
+    /// </summary>
     public interface IAuthService
     {
         User Authenticate(string username, string password);
     }
-
+    /// <summary>
+    /// Klasa implementująca interfejs do uwierzytelniania użytkowników
+    /// </summary>
     public class AuthService : IAuthService
     {
         private readonly surveyContext _context;

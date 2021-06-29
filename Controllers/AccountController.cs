@@ -15,6 +15,9 @@ using System.Threading.Tasks;
 
 namespace Surveys.Controllers
 {
+    /// <summary>
+    /// Klasa zawierająca logikę związaną z kontami użytkowników
+    /// </summary>
     public class AccountController : Controller
     {
         private readonly surveyContext _context;

@@ -1,11 +1,13 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 
 #nullable disable
 
 namespace Surveys.Model
 {
+    /// <summary>
+    /// Klasa reprezentująca kontekst bazę danych
+    /// </summary>
     public partial class surveyContext : DbContext
     {
         public surveyContext()

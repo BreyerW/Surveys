@@ -1,6 +1,5 @@
 var class_surveys_1_1_controllers_1_1_surveys_controller =
 [
-    [ "SurveysController", "class_surveys_1_1_controllers_1_1_surveys_controller.html#a2a412941a49a0c9874ba20c4b882a4f1", null ],
     [ "Audit", "class_surveys_1_1_controllers_1_1_surveys_controller.html#a61ab4cd9cd97c327871c84aca4cad265", null ],
     [ "Audit", "class_surveys_1_1_controllers_1_1_surveys_controller.html#a4acbe749039340616218e0f91bf5e3f0", null ],
     [ "Complete", "class_surveys_1_1_controllers_1_1_surveys_controller.html#a68a7e6fe52733aa08e6b2c1198c9893d", null ],

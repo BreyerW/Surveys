@@ -4,6 +4,16 @@
         <name>TestingSurveys</name>
     </assembly>
     <members>
+        <member name="T:TestingSurveys.Factory">
+            <summary>
+            Fabryka tworząca serwer i hosta na potrzeby testów automatycznych
+            </summary>
+        </member>
+        <member name="T:TestingSurveys.Tests">
+            <summary>
+            Klasa zawierająca testy automatyczne
+            </summary>
+        </member>
         <member name="M:TestingSurveys.Tests.Setup">
             <summary>
             Ustanowienie połączenia z przeglądarką i bazy danych w pamięci.

@@ -19,6 +19,9 @@ using System.Threading.Tasks;
 
 namespace Surveys
 {
+    /// <summary>
+    /// Klasa konfiguruj¹ca œrodowisko aplikacji i sam¹ aplikacjê na starcie programu.
+    /// </summary>
     public class Startup
     {
         public static bool testing = false;
@@ -29,7 +32,10 @@ namespace Surveys
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+        /// <summary>
+        /// Funkcja dodaj¹ca i konfiguruj¹ca dynamicznie us³ugi rozszerzaj¹ce aplikacjê
+        /// </summary>
+        /// <param name="services">kolekcja us³ug u¿ywanych standardowo przez ASP.NET Core</param>
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
@@ -67,7 +73,11 @@ namespace Surveys
             });
             services.AddScoped<IAuthService, AuthService>();
         }
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// <summary>
+        /// Funkcja konfiguruj¹ca ¿¹dania HTTP.
+        /// </summary>
+        /// <param name="app">klasa buduj¹ca aplikacjê</param>
+        /// <param name="env">klasa reprezentuj¹ca œrodowisko aplikacji internetowej</param>
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseRequestLocalization();

@@ -7,6 +7,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Surveys.Model
 {
+    /// <summary>
+    /// Klasa reprezentująca dane potrzebne do logoania
+    /// </summary>
     public class LoginData
     {
         [Display(Name = "Nazwa użytkownika")]

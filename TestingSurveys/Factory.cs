@@ -15,6 +15,9 @@ using System.Threading.Tasks;
 
 namespace TestingSurveys
 {
+    /// <summary>
+    /// Fabryka tworząca serwer i hosta na potrzeby testów automatycznych
+    /// </summary>
     public class Factory : WebApplicationFactory<Startup>
     {
         public static surveyContext context;

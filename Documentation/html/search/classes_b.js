@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['tests_197',['Tests',['../class_testing_surveys_1_1_tests.html',1,'TestingSurveys']]]
+  ['user_78',['User',['../class_surveys_1_1_model_1_1_user.html',1,'Surveys::Model']]]
 ];

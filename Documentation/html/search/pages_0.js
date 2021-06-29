@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['the_20mit_20license_20_28mit_29_368',['The MIT License (MIT)',['../md__c___users_damia_source_repos__surveys_wwwroot_lib_jquery_validation__l_i_c_e_n_s_e.html',1,'']]]
+  ['aplikacja_20internetowa_20do_20tworzenia_20i_20wypełniania_20ankiet_2e_116',['Aplikacja internetowa do tworzenia i wypełniania ankiet.',['../md__c___users_damia_source_repos__surveys__r_e_a_d_m_e.html',1,'']]]
 ];

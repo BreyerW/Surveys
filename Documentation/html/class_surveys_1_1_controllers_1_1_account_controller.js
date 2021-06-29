@@ -1,6 +1,5 @@
 var class_surveys_1_1_controllers_1_1_account_controller =
 [
-    [ "AccountController", "class_surveys_1_1_controllers_1_1_account_controller.html#a223a574bf141c6b22d093aa6ddca72f8", null ],
     [ "Create", "class_surveys_1_1_controllers_1_1_account_controller.html#a520f92a9cf3869bc2f155c49fc06022d", null ],
     [ "Create", "class_surveys_1_1_controllers_1_1_account_controller.html#ad67e4f2eb85ec389bc1b2eb1f068295b", null ],
     [ "Login", "class_surveys_1_1_controllers_1_1_account_controller.html#a78e4b70bce2f16b32a4ed9b9a5857a22", null ],

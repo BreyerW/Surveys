@@ -14,6 +14,9 @@ using Surveys.Model;
 
 namespace Surveys.Controllers
 {
+    /// <summary>
+    /// Klasa zawierająca logikę związaną z ankietami
+    /// </summary>
     public class SurveysController : Controller
     {
         private readonly surveyContext _context;

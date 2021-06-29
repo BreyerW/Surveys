@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace Surveys.Controllers
 {
+    /// <summary>
+    /// Klasa zawierająca logikę związaną ze stroną główną
+    /// </summary>
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

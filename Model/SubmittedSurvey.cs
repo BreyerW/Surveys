@@ -5,6 +5,9 @@ using System.Collections.Generic;
 
 namespace Surveys.Model
 {
+    /// <summary>
+    /// Klasa reprezentująca rekordy tabeli submitted_surveys w bazie danych
+    /// </summary>
     public partial class SubmittedSurvey
     {
         public int Id { get; set; }

@@ -1,16 +1,11 @@
 var searchData=
 [
-  ['accountcontroller_4',['AccountController',['../class_surveys_1_1_controllers_1_1_account_controller.html#a223a574bf141c6b22d093aa6ddca72f8',1,'Surveys.Controllers.AccountController.AccountController()'],['../class_surveys_1_1_controllers_1_1_account_controller.html',1,'Surveys.Controllers.AccountController']]],
-  ['accountcontroller_2ecs_5',['AccountController.cs',['../_account_controller_8cs.html',1,'']]],
-  ['allowmultipleanswers_6',['AllowMultipleAnswers',['../class_surveys_1_1_model_1_1_surveys_content.html#ab16e7b801c49d99cd222f84d01c9fc16',1,'Surveys::Model::SurveysContent']]],
-  ['answer_7',['Answer',['../class_surveys_1_1_model_1_1_predefined_answer.html#a21f1b914496e23d29b3bf401a29e3f7f',1,'Surveys::Model::PredefinedAnswer']]],
-  ['answers_8',['Answers',['../class_surveys_1_1_model_1_1_submitted_survey_answer.html#a0c591c82c98aed541c538c86d2f4774e',1,'Surveys::Model::SubmittedSurveyAnswer']]],
-  ['aspnetcore_9',['AspNetCore',['../namespace_asp_net_core.html',1,'']]],
-  ['audit_10',['Audit',['../class_surveys_1_1_controllers_1_1_surveys_controller.html#a61ab4cd9cd97c327871c84aca4cad265',1,'Surveys.Controllers.SurveysController.Audit()'],['../class_surveys_1_1_controllers_1_1_surveys_controller.html#a4acbe749039340616218e0f91bf5e3f0',1,'Surveys.Controllers.SurveysController.Audit(string audit, string hash)']]],
-  ['audit_2ecshtml_2eg_2ecs_11',['Audit.cshtml.g.cs',['../_audit_8cshtml_8g_8cs.html',1,'']]],
-  ['authenticate_12',['Authenticate',['../interface_surveys_1_1_i_auth_service.html#ab0518ecd8355a43ddb94db3749446eeb',1,'Surveys.IAuthService.Authenticate()'],['../class_surveys_1_1_auth_service.html#a66b2e74be5371876462319953e67e3e0',1,'Surveys.AuthService.Authenticate(string username, string password)']]],
-  ['authservice_13',['AuthService',['../class_surveys_1_1_auth_service.html#a7b94187e18bcaf6109a85ef2a28387db',1,'Surveys.AuthService.AuthService()'],['../class_surveys_1_1_auth_service.html',1,'Surveys.AuthService']]],
-  ['authservice_2ecs_14',['AuthService.cs',['../_auth_service_8cs.html',1,'']]],
-  ['create_2ecshtml_2eg_2ecs_15',['Create.cshtml.g.cs',['../_account_2_create_8cshtml_8g_8cs.html',1,'']]],
-  ['success_2ecshtml_2eg_2ecs_16',['Success.cshtml.g.cs',['../_account_2_success_8cshtml_8g_8cs.html',1,'']]]
+  ['complete_6',['Complete',['../class_surveys_1_1_controllers_1_1_surveys_controller.html#a68a7e6fe52733aa08e6b2c1198c9893d',1,'Surveys.Controllers.SurveysController.Complete(int? id)'],['../class_surveys_1_1_controllers_1_1_surveys_controller.html#a342fdfa9f4c6aeca4bd9a33aa57ac1c0',1,'Surveys.Controllers.SurveysController.Complete(int? id, string[][] answer)']]],
+  ['completesamplesurvey_7',['CompleteSampleSurvey',['../class_testing_surveys_1_1_tests.html#af9a97d6751738adb693e497b83d4b3ee',1,'TestingSurveys::Tests']]],
+  ['configure_8',['Configure',['../class_surveys_1_1_startup.html#a79f5b926d95c3c18421ae864937b4a9b',1,'Surveys::Startup']]],
+  ['configureservices_9',['ConfigureServices',['../class_surveys_1_1_startup.html#a7779f47b7825ef311b01a07745d78656',1,'Surveys::Startup']]],
+  ['create_10',['Create',['../class_surveys_1_1_controllers_1_1_account_controller.html#a520f92a9cf3869bc2f155c49fc06022d',1,'Surveys.Controllers.AccountController.Create()'],['../class_surveys_1_1_controllers_1_1_account_controller.html#ad67e4f2eb85ec389bc1b2eb1f068295b',1,'Surveys.Controllers.AccountController.Create([Bind(&quot;Username,Sex,BirthYear,Password,ConfirmPassword&quot;)] User user)'],['../class_surveys_1_1_controllers_1_1_surveys_controller.html#a6d0f1c3130e6ce5a273542af6d335ef6',1,'Surveys.Controllers.SurveysController.Create()'],['../class_surveys_1_1_controllers_1_1_surveys_controller.html#a9c6fe6a7290839afacc5c9b1c8fd3974',1,'Surveys.Controllers.SurveysController.Create([Bind(&quot;Topic,MinBirthYear,MaxBirthYear,Sex&quot;)] Survey survey, string @new, string create, string create_answer, string[] q, bool[][] config, string[][] a, string delete_question, string delete_answer, string add_existing, string existingQ)']]],
+  ['createandloginanothertestuser_11',['CreateAndLogInAnotherTestUser',['../class_testing_surveys_1_1_tests.html#ae27848ccf162116b0153fb4eef3ca545',1,'TestingSurveys::Tests']]],
+  ['createhostbuilder_12',['CreateHostBuilder',['../class_surveys_1_1_program.html#a14dfa4de1ec319f285b4c1b753e779eb',1,'Surveys::Program']]],
+  ['createsamplesurvey_13',['CreateSampleSurvey',['../class_testing_surveys_1_1_tests.html#af32db9549fa59b2103fffa057d1ae71f',1,'TestingSurveys::Tests']]]
 ];
